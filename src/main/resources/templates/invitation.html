@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#f5ebe0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="description" content="Приглашение на свадьбу Артёма и Виктории">
+    <title>Артём & Виктория — 12 ноября 2026</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=Great+Vibes&family=Montserrat:wght@300;400&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<!-- PRELOADER -->
+<div id="preloader">
+    <div class="preloader-content">
+        <div class="preloader-image">
+            <img src="https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?w=400&h=400&fit=crop"
+                 alt="Wedding rings"
+                 class="rings-image">
+        </div>
+        <div class="preloader-text">
+            <span class="preloader-names">Артём & Виктория</span>
+            <span class="preloader-date">12.11.2026</span>
+        </div>
+    </div>
+</div>
+
+<!-- СЛАЙД 1: HERO -->
+<section class="hero">
+    <div class="hero-content animate-on-scroll">
+        <p class="subtitle">Приглашение на свадьбу</p>
+        <h1 class="names">
+            <span th:text="${groom}">Артём</span>
+            <span class="amp">&amp;</span>
+            <span th:text="${bride}">Виктория</span>
+        </h1>
+        <div class="divider"></div>
+        <p class="date" th:text="${date}">12 ноября 2026</p>
+    </div>
+</section>
+
+<!-- СЛАЙД 2: ОБРАЩЕНИЕ + КАЛЕНДАРЬ -->
+<section class="message-section">
+    <div class="message-content animate-on-scroll" data-direction="left">
+        <p class="message-text">
+            Мы давно ждали момента, когда вместе с Вами сможем разделить самый важный и счастливый день в нашей жизни.
+            Этот день станет особенным именно потому, что рядом будут самые близкие и дорогие люди.
+        </p>
+        <p class="message-text">
+            Разделите с нами радость этого особенного дня!
+        </p>
+    </div>
+
+    <div class="calendar animate-on-scroll" data-direction="zoom">
+        <div class="calendar-month">Ноябрь 2026</div>
+        <div class="calendar-grid">
+            <div class="calendar-day-name">Пн</div>
+            <div class="calendar-day-name">Вт</div>
+            <div class="calendar-day-name">Ср</div>
+            <div class="calendar-day-name">Чт</div>
+            <div class="calendar-day-name">Пт</div>
+            <div class="calendar-day-name">Сб</div>
+            <div class="calendar-day-name">Вс</div>
+
+            <div class="calendar-day empty"></div>
+            <div class="calendar-day empty"></div>
+            <div class="calendar-day empty"></div>
+            <div class="calendar-day empty"></div>
+            <div class="calendar-day empty"></div>
+            <div class="calendar-day empty"></div>
+            <div class="calendar-day">1</div>
+
+            <div class="calendar-day">2</div>
+            <div class="calendar-day">3</div>
+            <div class="calendar-day">4</div>
+            <div class="calendar-day">5</div>
+            <div class="calendar-day">6</div>
+            <div class="calendar-day">7</div>
+            <div class="calendar-day">8</div>
+
+            <div class="calendar-day">9</div>
+            <div class="calendar-day">10</div>
+            <div class="calendar-day">11</div>
+            <div class="calendar-day wedding-day">12</div>
+            <div class="calendar-day">13</div>
+            <div class="calendar-day">14</div>
+            <div class="calendar-day">15</div>
+
+            <div class="calendar-day">16</div>
+            <div class="calendar-day">17</div>
+            <div class="calendar-day">18</div>
+            <div class="calendar-day">19</div>
+            <div class="calendar-day">20</div>
+            <div class="calendar-day">21</div>
+            <div class="calendar-day">22</div>
+
+            <div class="calendar-day">23</div>
+            <div class="calendar-day">24</div>
+            <div class="calendar-day">25</div>
+            <div class="calendar-day">26</div>
+            <div class="calendar-day">27</div>
+            <div class="calendar-day">28</div>
+            <div class="calendar-day">29</div>
+
+            <div class="calendar-day">30</div>
+        </div>
+    </div>
+</section>
+
+<!-- СЛАЙД 3: ФОРМА RSVP -->
+<section class="rsvp-section">
+    <div class="animate-on-scroll">
+        <h2 class="rsvp-title">Ваш ответ</h2>
+
+        <div th:if="${success}" class="success-message">
+            Спасибо! Ваш ответ записан 💍
+        </div>
+
+        <form th:action="@{/rsvp}" th:object="${guest}" method="post" class="rsvp-form">
+            <div class="form-group">
+                <label for="name">Ваше имя</label>
+                <input type="text" id="name" th:field="*{name}" placeholder="Как к вам обращаться?" required>
+            </div>
+
+            <div class="form-group">
+                <label for="guestCount">Количество гостей</label>
+                <select id="guestCount" th:field="*{guestCount}" required>
+                    <option value="1">1 человек</option>
+                    <option value="2">2 человека</option>
+                    <option value="3">3 человека</option>
+                    <option value="4">4 человека</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Что планируете употреблять?</label>
+                <p class="form-hint">Можно выбрать несколько вариантов</p>
+                <div class="checkbox-group">
+                    <label class="checkbox-label">
+                        <input type="checkbox" name="alcoholPreference" value="wine">
+                        <span> Вино</span>
+                    </label>
+                    <label class="checkbox-label">
+                        <input type="checkbox" name="alcoholPreference" value="champagne">
+                        <span>🥂 Шампанское</span>
+                    </label>
+                    <label class="checkbox-label">
+                        <input type="checkbox" name="alcoholPreference" value="whiskey">
+                        <span>🥃 Крепкие напитки</span>
+                    </label>
+                    <label class="checkbox-label">
+                        <input type="checkbox" name="alcoholPreference" value="none">
+                        <span>🥤 Безалкогольное</span>
+                    </label>
+                </div>
+            </div>
+
+            <button type="submit" class="submit-button">Отправить ответ</button>
+        </form>
+    </div>
+</section>
+
+<!-- СЛАЙД 4: ФИНАЛЬНЫЙ — ДЕТАЛИ + ФОТО + ТАЙМЕР + КАРТА -->
+<section class="finale-section">
+
+    <!-- Блок 1: Заголовок + Фото + Адрес -->
+    <div class="finale-details animate-on-scroll" data-direction="left">
+        <h2 class="finale-title">С нетерпением ждём!</h2>
+
+        <!--
+        <div class="finale-photo">
+            <img src="https://images.unsplash.com/photo-1519741497674-611481863552?w=600&h=400&fit=crop"
+                 alt="Наше фото"
+                 class="photo-image">
+        </div>
+        -->
+
+        <div class="finale-info">
+            <p class="finale-text">
+                Церемония бракосочетания состоится<br>
+                <strong th:text="${date}">12 ноября 2026</strong> в <strong th:text="${time}">12:40</strong>
+            </p>
+            <p class="finale-address" th:text="${address}">г. Санкт-Петербург, проспект Славы, 31</p>
+        </div>
+    </div>
+
+    <!-- Блок 2: Таймер -->
+    <div class="finale-countdown animate-on-scroll" data-direction="zoom">
+        <h3 class="countdown-subtitle">Встречаемся через</h3>
+        <div class="timer">
+            <div class="timer-item">
+                <span class="timer-number" id="days">0</span>
+                <span class="timer-label">дней</span>
+            </div>
+            <div class="timer-item">
+                <span class="timer-number" id="hours">0</span>
+                <span class="timer-label">часов</span>
+            </div>
+            <div class="timer-item">
+                <span class="timer-number" id="minutes">0</span>
+                <span class="timer-label">минут</span>
+            </div>
+            <div class="timer-item">
+                <span class="timer-number" id="seconds">0</span>
+                <span class="timer-label">секунд</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Блок 3: Карта -->
+    <div class="finale-map animate-on-scroll" data-direction="right">
+        <h3 class="map-subtitle">Как добраться</h3>
+        <div class="map-container">
+            <iframe
+                    src="https://yandex.ru/map-widget/v1/?text=Санкт-Петербург, проспект Славы, 31&z=16&l=map"
+                    width="100%"
+                    height="100%"
+                    frameborder="0"
+                    allowfullscreen="true"
+                    loading="lazy"
+                    style="border: 0; width: 100%; height: 100%;">
+            </iframe>
+        </div>
+        <a th:href="${mapUrl}" target="_blank" class="map-button">Построить маршрут</a>
+    </div>
+
+</section>
+
+<!-- Lenis Smooth Scroll -->
+<script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
+<script>
+    const lenis = new Lenis({
+        duration: 1.2,
+        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+        smooth: true
+    });
+
+    function raf(time) {
+        lenis.raf(time);
+        requestAnimationFrame(raf);
+    }
+    requestAnimationFrame(raf);
+</script>
+
+<!-- Прелоадер -->
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const preloader = document.getElementById('preloader');
+        if (!preloader) return;
+
+        const hasVisited = sessionStorage.getItem('weddingVisited');
+
+        if (hasVisited === 'true') {
+            preloader.style.display = 'none';
+            return;
+        }
+
+        setTimeout(function() {
+            preloader.classList.add('fade-out');
+
+            setTimeout(function() {
+                preloader.style.display = 'none';
+                sessionStorage.setItem('weddingVisited', 'true');
+            }, 1000);
+        }, 3000);
+    });
+</script>
+
+<!-- Intersection Observer для анимаций -->
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.15
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                } else {
+                    entry.target.classList.remove('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.animate-on-scroll').forEach(el => {
+            observer.observe(el);
+        });
+    });
+</script>
+
+<!-- Таймер обратного отсчёта -->
+<script>
+    const weddingDate = new Date('2026-11-12T12:40:00').getTime();
+
+    function updateTimer() {
+        const now = new Date().getTime();
+        const distance = weddingDate - now;
+
+        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+        document.getElementById('days').innerText = days;
+        document.getElementById('hours').innerText = hours;
+        document.getElementById('minutes').innerText = minutes;
+        document.getElementById('seconds').innerText = seconds;
+    }
+
+    setInterval(updateTimer, 1000);
+    updateTimer();
+</script>
+
+</body>
+</html>
