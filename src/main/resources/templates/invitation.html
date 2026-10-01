@@ -13,21 +13,6 @@
 </head>
 <body>
 
-<!-- PRELOADER -->
-<div id="preloader">
-    <div class="preloader-content">
-        <div class="preloader-image">
-            <img src="https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?w=400&h=400&fit=crop"
-                 alt="Wedding rings"
-                 class="rings-image">
-        </div>
-        <div class="preloader-text">
-            <span class="preloader-names">Артём & Виктория</span>
-            <span class="preloader-date">12.11.2026</span>
-        </div>
-    </div>
-</div>
-
 <!-- СЛАЙД 1: HERO -->
 <section class="hero">
     <div class="hero-content animate-on-scroll">
@@ -136,7 +121,7 @@
             </div>
 
             <div class="form-group">
-                <label>Что планируете употреблять?</label>
+                <label>Ваш выбор в напитках </label>
                 <p class="form-hint">Можно выбрать несколько вариантов</p>
                 <div class="checkbox-group">
                     <label class="checkbox-label">
@@ -243,30 +228,6 @@
         requestAnimationFrame(raf);
     }
     requestAnimationFrame(raf);
-</script>
-
-<!-- Прелоадер -->
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const preloader = document.getElementById('preloader');
-        if (!preloader) return;
-
-        const hasVisited = sessionStorage.getItem('weddingVisited');
-
-        if (hasVisited === 'true') {
-            preloader.style.display = 'none';
-            return;
-        }
-
-        setTimeout(function() {
-            preloader.classList.add('fade-out');
-
-            setTimeout(function() {
-                preloader.style.display = 'none';
-                sessionStorage.setItem('weddingVisited', 'true');
-            }, 1000);
-        }, 3000);
-    });
 </script>
 
 <!-- Intersection Observer для анимаций -->

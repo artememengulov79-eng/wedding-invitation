@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 
@@ -26,7 +27,7 @@ public class InvitationController {
         model.addAttribute("groom", "Артём");
         model.addAttribute("bride", "Виктория");
         model.addAttribute("date", "12 ноября 2026");
-        model.addAttribute("time", "13:00");
+        model.addAttribute("time", "12:40");
         model.addAttribute("address", "г. Санкт-Петербург, проспект Славы, 31");
         model.addAttribute("mapUrl", "https://yandex.ru/maps/-/CXUBz8Lt");
         model.addAttribute("guest", new Guest());
@@ -61,6 +62,13 @@ public class InvitationController {
     public String clearGuests(RedirectAttributes redirectAttributes) {
         guestRepository.deleteAll();
         redirectAttributes.addFlashAttribute("success", "Список гостей очищен");
+        return "redirect:/admin";
+    }
+
+    @PostMapping("/admin/delete/{id}")
+    public String deleteGuest(@PathVariable Long id, RedirectAttributes redirectAttributes) {
+        guestRepository.deleteById(id);
+        redirectAttributes.addFlashAttribute("success", "Гость удалён");
         return "redirect:/admin";
     }
 }

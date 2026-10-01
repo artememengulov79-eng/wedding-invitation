@@ -35,17 +35,24 @@
 
     <div class="guests-list">
         <div th:each="guest : ${guests}" class="guest-card">
-            <div class="guest-name" th:text="${guest.name}">Имя</div>
+            <div class="guest-header">
+                <div class="guest-name" th:text="${guest.name}">Имя</div>
+                <form th:action="@{'/admin/delete/' + ${guest.id}}" method="post"
+                      onsubmit="return confirm('Удалить этого гостя?');"
+                      class="delete-form">
+                    <button type="submit" class="delete-button">Удалить</button>
+                </form>
+            </div>
             <div class="guest-details">
                 <span th:text="${guest.guestCount} + ' чел.'">1 чел.</span>
                 <span class="alcohol-list">
                     <span th:if="${guest.alcoholPreference != null}">
                         <span th:each="alcohol, iterStat : ${#strings.arraySplit(guest.alcoholPreference, ',')}">
                             <span th:switch="${alcohol}">
-                                <span th:case="'wine'">🍷 Вино</span>
+                                <span th:case="'wine'"> Вино</span>
                                 <span th:case="'champagne'">🥂 Шампанское</span>
                                 <span th:case="'whiskey'">🥃 Крепкие</span>
-                                <span th:case="'none'"> Безалк.</span>
+                                <span th:case="'none'">🥤 Безалк.</span>
                                 <span th:case="*">Не указано</span>
                             </span>
                             <span th:if="${!iterStat.last}">, </span>
