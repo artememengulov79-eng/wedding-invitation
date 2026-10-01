@@ -4,22 +4,21 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
+import java.util.StringJoiner;
 
 @Controller
 public class InvitationController {
 
     private final GuestRepository guestRepository;
-    private final EmailService emailService;
 
-    // Добавили EmailService сюда
-    public InvitationController(GuestRepository guestRepository, EmailService emailService) {
+    public InvitationController(GuestRepository guestRepository) {
         this.guestRepository = guestRepository;
-        this.emailService = emailService;
     }
 
     @GetMapping("/")
@@ -36,13 +35,20 @@ public class InvitationController {
 
     @PostMapping("/rsvp")
     public String submitRsvp(@ModelAttribute("guest") Guest guest,
+                             @RequestParam(value = "alcoholPreference", required = false) List<String> alcoholList,
                              RedirectAttributes redirectAttributes) {
         try {
-            // 1. Сохраняем в базу
-            guestRepository.save(guest);
-            // 2. Отправляем тебе письмо!
-            //emailService.sendGuestNotification(guest);
+            if (alcoholList != null && !alcoholList.isEmpty()) {
+                StringJoiner joiner = new StringJoiner(",");
+                for (String alcohol : alcoholList) {
+                    joiner.add(alcohol);
+                }
+                guest.setAlcoholPreference(joiner.toString());
+            } else {
+                guest.setAlcoholPreference("none");
+            }
 
+            guestRepository.save(guest);
             redirectAttributes.addFlashAttribute("success", true);
         } catch (Exception e) {
             e.printStackTrace();
